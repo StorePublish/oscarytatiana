@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oscar & Tatiana - Nos Casamos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F5F5DC;
+            color: #0B5345;
+        }
+        h1, h2, h3 {
+            font-family: 'Pinyon Script', cursive;
+        }
+        .header {
+            background-color: #0B5345;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            color: #F5F5DC;
+            text-align: center;
+        }
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url(./header-img.jpg);
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+        }
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        .title {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            border: 4px solid #D4AF37;
+            padding: 0.5rem 1rem;
+        }
+        .subtitle {
+            font-size: 2.5rem;
+            margin-top: 1.5rem;
+        }
+        .subtitle span {
+            border-bottom: 4px solid #D4AF37;
+            padding-bottom: 0.5rem;
+        }
+        .btn {
+            background-color: #D4AF37;
+            color: #0B5345;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.2s;
+        }
+        .btn:hover {
+            background-color: #C4A137;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(11, 83, 69, 0.9);
+            z-index: 50;
+            transition: transform 0.3s ease-in-out;
+        }
+        nav.hidden {
+            transform: translateY(-100%);
+        }
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 1rem;
+            margin: 0;
+        }
+        nav ul li {
+            margin: 0 1rem;
+        }
+        nav ul li a {
+            color: #F5F5DC;
+            text-decoration: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        nav ul li a:hover {
+            color: #D4AF37;
+        }
+        nav ul li a i {
+            margin-right: 0.5rem;
+        }
+        .section {
+            padding: 3rem 1rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .countdown {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .countdown-item {
+            background-color: #0B5345;
+            color: #F5F5DC;
+            padding: 1rem;
+            margin: 0.5rem;
+            border-radius: 0.5rem;
+            min-width: 100px;
+            text-align: center;
+        }
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .divider {
+            height: 300px;
+            background-image: url(./WhatsApp\ Image\ 2024-09-18\ at\ 6.32.58\ AM.jpeg);
+            background-size: cover;
+            background-attachment: fixed;
+           
+        }
+        .info-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .info-card {
+            width: 256px;
+            margin: 1rem;
+            background-color: #F5F5DC;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .info-card:hover {
+            transform: scale(1.05);
+        }
+        .info-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .info-card-content {
+            padding: 1rem;
+        }
+        .location-maps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .location-map {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        @media (min-width: 768px) {
+            .location-map {
+                width: 48%;
+                margin-bottom: 0;
+            }
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: #F5F5DC;
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            max-width: 500px;
+            position: relative;
+        }
+        .close {
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        .audio-control {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 50;
+            background-color: #D4AF37;
+            color: #0B5345;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        footer {
+            background-color: #0B5345;
+            color: #F5F5DC;
+            text-align: center;
+            padding: 1rem;
+        }
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 1rem;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #F5F5DC;
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                z-index: 100;
+            }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: rgba(11, 83, 69, 0.95);
+                align-items: center;
+                justify-content: center;
+            }
+            nav ul.show {
+                display: flex;
+            }
+            nav ul li {
+                margin: 1rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-bg"></div>
+        <div class="header-content">
+            <h1 class="title">Oscar & Tatiana</h1>
+            <h2 class="subtitle"><span>¡Nos Casamos!</span></h2>
+            <div style="margin-top: 3rem;">
+                <p style="font-size: 1.5rem; margin-bottom: 1rem;">Confírmanos tu asistencia</p>
+                <a href="#confirmation" class="btn">Confirmar</a>
+            </div>
+        </div>
+    </header>
+
+    <nav id="navbar">
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <ul id="menu">
+            <li><a href="#countdown"><i class="fas fa-clock"></i> Cuenta Regresiva</a></li>
+            <li><a href="#info"><i class="fas fa-info-circle"></i> Lugar y Hora</a></li>
+            <li><a href="#location"><i class="fas fa-map-marker-alt"></i> Ubicación</a></li>
+            <li><a href="#confirmation"><i class="fas fa-check-circle"></i> Confirmación</a></li>
+            <li><a href="#gallery"><i class="fas fa-images"></i> Galería</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="countdown" class="section">
+            <div class="container">
+                <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem;">Cuenta Regresiva</h2>
+                <div class="countdown">
+                    <div class="countdown-item">
+                        <span id="days" class="countdown-number">00</span>
+                        <span>Días</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="hours" class="countdown-number">00</span>
+                        <span>Horas</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="minutes" class="countdown-number">00</span>
+                        <span>Minutos</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="seconds" class="countdown-number">00</span>
+                        <span>Segundos</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="info" class="section" style="background-color: #0B5345; color: #F5F5DC;">
+            <div class="container">
+                <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem;">Lugar y Hora</h2>
+                <div class="info-cards">
+                    <div class="info-card" onclick="showModal('ceremony')">
+                        <img src="./Iglesia.jpeg" alt="Ceremonia">
+                        <div class="info-card-content">
+                            <h3 style="color: #0B5345;">Ceremonia</h3>
+                        </div>
+                    </div>
+                    <div class="info-card" onclick="showModal('reception')">
+                        <img src="foto-133_10_94304.jpeg" alt="Recepción">
+                        <div class="info-card-content">
+                            <h3 style="color: #0B5345;">Recepción</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="location" class="section">
+            <div class="container">
+                <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem;">Ubicación</h2>
+                <div class="location-maps">
+                    <div class="location-map">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Ceremonia</h3>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.0273006235084!2d-74.04223052587616!3d4.765236241096505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f858d301c1e6d%3A0xbdcbac26af61fcb1!2sPARROQUIA%20St.%20JUAN%20MAR%C3%8DA%20VIANNEY!5e0!3m2!1sen!2sco!4v1725297596872!5m2!1sen!2sco" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="location-map">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Recepción</h3>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.0696796413295!2d-74.0400805258763!3d4.757904741160768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f858f1f2fa52d%3A0x42d9141a873a9709!2zQ3JhLiAxNiAjMTgxLTE0LCBVc2FxdcOpbiwgQm9nb3TDoQ!5e0!3m2!1sen!2sco!4v1725297711806!5m2!1sen!2sco" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="confirmation" class="section" style="background-color: #0B5345; color: #F5F5DC;">
+            <div class="container">
+                <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem;">Confirmación</h2>
+                <div style="text-align: center;">
+                    <a href="https://wa.me/573192767150?text=Nosotros%20la%20familia%20%5BIngrese%20el%20nombre%20de%20la%20familia%5D%20confirmamos%20nuestra%20asistencia%20al%20matrimonio.%20Muchisimas%20Gracias." class="btn">
+                        <i class="fab fa-whatsapp"></i> Confirmar por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="section">
+            <div class="container">
+                <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem;">Galería de Fotos</h2>
+                <div id="gallery-container" style="display: flex; flex-wrap: wrap; justify-content: center;"></div>
+            </div>
+        </section>
+    </main>
+
+    <div id="ceremonyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('ceremony')">&times;</span>
+            <img src="./Iglesia-mini.jpg" alt="Ceremonia" style="width: 100%; border-radius: 0.5rem;">
+            <h3 style="font-size: 1.5rem; margin: 1rem 0;">Ceremonia</h3>
+            <p><i class="fas fa-church"></i> La ceremonia se llevará a cabo en la Parroquia San Juan María Vianney.</p>
+            <p><i class="far fa-clock"></i> Hora de llegada: 4:30 PM</p>
+            <p><i class="fas fa-map-marker-alt"></i> Tv. 18b #187-31, Usaquén, Bogotá</p>
+            <p><i class="fas fa-tshirt"></i> <strong>Dress Code:</strong> Hombres: Formal, Mujeres: Vestido largo</p>
+        </div>
+    </div>
+
+    <div id="receptionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('reception')">&times;</span>
+            <img src="./foto-596_10_94304.jpg" alt="Recepción" style="width: 100%; border-radius: 0.5rem;">
+            <h3 style="font-size: 1.5rem; margin: 1rem 0;">Recepción</h3>
+            <p><i class="fas fa-glass-cheers"></i> la recepcion se llevara acabo en la casa quinta Ana Maria Sierra.</p>
+            <p><i class="far fa-clock"></i> Hora de llegada: 6:00 PM</p>
+            <p><i class="fas fa-map-marker-alt"></i> Cra. 90 #159a-48, Bogotá</p>
+            <p><i class="fas fa-tshirt"></i> <strong>Dress Code:</strong> Hombres: Formal, Mujeres: Vestido largo</p>
+        </div>
+    </div>
+
+    <div class="audio-control" onclick="toggleAudio()">
+        <i id="audioIcon" class="fas fa-volume-up"></i>
+    </div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="Y2meta.app - Fonseca - Por Toda la Vida (Letra) (128 kbps).mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <footer>
+        <p>&copy; 2024 Oscar & Tatiana. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Countdown
+        const countDownDate = new Date("Oct 14, 2024 16:30:00").getTime();
+
+        const countdownFunction = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(countdownFunction);
+                document.getElementById("countdown").innerHTML = "¡El gran día ha llegado!";
+            }
+        }, 1000);
+
+        // Navbar visibility
+        let lastScrollTop = 0;
+        window.addEventListener("scroll", function() {
+            let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            if (currentScroll > lastScrollTop) {
+                document.getElementById("navbar").classList.add("hidden");
+            } else {
+                document.getElementById("navbar").classList.remove("hidden");
+            }
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+        }, false);
+
+        // Modal functions
+        function showModal(type) {
+            document.getElementById(type + 'Modal').style.display = "block";
+        }
+
+        function closeModal(type) {
+            document.getElementById(type + 'Modal').style.display = "none";
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = "none";
+            }
+        }
+
+        // Audio control
+        const audio = document.getElementById("backgroundMusic");
+        let isPlaying = false;
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+                document.getElementById("audioIcon").className = "fas fa-volume-mute";
+            } else {
+                audio.play();
+                document.getElementById("audioIcon").className = "fas fa-volume-up";
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Gallery
+        const API_KEY = 'AIzaSyDwHuENiyVgVZkuVd5OIfyujVOZeHqRFsU';
+        const FOLDER_ID = '1fKaVqCpFIjvNxneRnMPHtoBqmgi22MmM';
+
+async function fetchImages() {
+    try {
+        const response = await fetch(`https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType,webViewLink)`);
+        const data = await response.json();
+        
+        if (data.error) {
+            console.error('Error from Google API:', data.error);
+            return;
+        }
+        
+        const imageFiles = data.files.filter(file => file.mimeType.startsWith('image/'));
+        const galleryContainer = document.getElementById('gallery-container');
+
+        imageFiles.forEach(file => {
+            const img = document.createElement('img');
+            const fileId = file.id;
+            img.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w200-h200`;
+            img.alt = file.name;
+            img.style.width = '200px';
+            img.style.height = '200px';
+            img.style.objectFit = 'cover';
+            img.style.margin = '5px';
+            img.onerror = function() {
+                console.error(`Failed to load image: ${file.name}`);
+                this.src = 'https://via.placeholder.com/200?text=Image+Not+Found';
+            };
+            
+            const link = document.createElement('a');
+            link.href = file.webViewLink;
+            link.target = '_blank';
+            link.appendChild(img);
+            
+            galleryContainer.appendChild(link);
+        });
+    } catch (error) {
+        console.error('Error fetching images:', error);
+    }
+}
+
+fetchImages();
+        // Hamburger menu
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('show');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const menu = document.getElementById('menu');
+                menu.classList.remove('show');
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
