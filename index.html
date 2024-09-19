@@ -408,7 +408,7 @@
         Your browser does not support the audio element.
     </audio>
     <footer>
-        <p>&copy; 2024 Oscar & Tatiana. Todos los derechos reservados.</p>
+        <p>&copy; Store.Publish.</p>
     </footer>
 
     <script>
@@ -463,8 +463,7 @@
             }
         }
 
-        // Audio control
-    const audio = document.getElementById("backgroundMusic");
+        const audio = document.getElementById("backgroundMusic");
     let isPlaying = false;
 
     function toggleAudio() {
@@ -472,23 +471,28 @@
             audio.pause();
             document.getElementById("audioIcon").className = "fas fa-volume-mute";
         } else {
-            audio.play();
-            document.getElementById("audioIcon").className = "fas fa-volume-up";
+            audio.play().then(() => {
+                document.getElementById("audioIcon").className = "fas fa-volume-up";
+            }).catch(err => {
+                console.log('Error playing audio:', err);
+            });
         }
         isPlaying = !isPlaying;
     }
 
     // Intenta reproducir el audio automáticamente al cargar la página
     window.addEventListener('load', function() {
-        audio.play().then(function() {
-            document.getElementById("audioIcon").className = "fas fa-volume-up"; // Cambia el ícono si comienza a reproducirse
-            isPlaying = true;
-        }).catch(function(error) {
-            console.log('Autoplay was prevented. Interaction is required to start the audio.');
-            // El audio no se reproduce automáticamente, por lo que el ícono permanece en mute
+        audio.addEventListener('canplaythrough', function() {
+            // Intenta reproducir el audio solo cuando esté listo
+            audio.play().then(() => {
+                document.getElementById("audioIcon").className = "fas fa-volume-up"; // Cambia el ícono si comienza a reproducirse
+                isPlaying = true;
+            }).catch(function(error) {
+                console.log('Autoplay was prevented. Interaction is required to start the audio.');
+                // El audio no se reproduce automáticamente, por lo que el ícono permanece en mute
+            });
         });
     });
-
         // Gallery
         const API_KEY = 'AIzaSyDwHuENiyVgVZkuVd5OIfyujVOZeHqRFsU';
         const FOLDER_ID = '1fKaVqCpFIjvNxneRnMPHtoBqmgi22MmM';
